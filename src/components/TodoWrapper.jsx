@@ -101,6 +101,28 @@ function TodoWrapper(){
     return;
   }
 
+  /**
+   * Handles deleting the todo item specified by the id
+   * @param {string} id - id of the todo to delete.
+   * @returns 
+   */
+  const handleTodoDelete = (id) => {
+    setTodos(
+      (currentTodos)=>{
+        const updatedTodos = currentTodos.filter(
+          (todo) => {
+            if( todo.id === id ){
+              return false;
+            }
+            return true;
+          }
+        )
+
+        return updatedTodos
+      }
+    )
+  }
+
   return(
     <div className="relative">
       <AddTodoForm newTodoCallback={createNewTask}></AddTodoForm>
@@ -113,6 +135,7 @@ function TodoWrapper(){
                 todoObject={todo}
                 todoToggleCallback={handleTodoToggle}
                 todoEditCallback={handleTodoUpdate}
+                todoDeleteCallback={handleTodoDelete}
               ></TodoItem>
             )
           )

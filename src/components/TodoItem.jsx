@@ -19,6 +19,10 @@ import CheckBox from "./CheckBox";
  * 
  * @param {Function} props.todoToggleCallback - function responsible for updating
  * a task when its completed state is toggled.
+ * @param {Function} props.todoEditCallback - function responsible for updating
+ * a task when its text is changed.
+ * @param {Function} props.todoDeleteCallback - function responsible for deleting
+ * a task from the main todos list.
  */
 function TodoItem({todoObject, todoToggleCallback, todoEditCallback, todoDeleteCallback }) {
   const [editText, setEditText] = useState(todoObject.text);
@@ -28,7 +32,6 @@ function TodoItem({todoObject, todoToggleCallback, todoEditCallback, todoDeleteC
 
   const toggleCompleted = (event) => {
     todoToggleCallback( event, todoObject.id )
-    console.log('toggle from <TodoItem>');
   }
 
   useEffect(
@@ -117,6 +120,18 @@ function TodoItem({todoObject, todoToggleCallback, todoEditCallback, todoDeleteC
     return
   }
 
+  /**
+   * handles the deletion logic for the specific taskItem
+   * @param {Event} event
+   */
+  const deleteTodo = (event)=>{
+    if( todoDeleteCallback && todoObject.id ){
+      todoDeleteCallback(todoObject.id);
+    }
+
+    return;
+  }
+
   return (
     <li
       className="flex flex-row items-center gap-2 p-2 bg-indigo_dye text-cream
@@ -184,6 +199,7 @@ function TodoItem({todoObject, todoToggleCallback, todoEditCallback, todoDeleteC
         <div 
           className="icon bg-mindaro text-indigo_dye flex justify-center
           items-center w-8 h-8 rounded-full cursor-pointer"
+          onClick={deleteTodo}
         >
           <FontAwesomeIcon
             icon={faTrashCan}
