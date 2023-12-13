@@ -6,7 +6,7 @@ import * as FACTORY from "../utils/factory";
 function TodoWrapper(){
   const [todos, setTodos] = useState(()=>{
     // temporary data
-    return FACTORY.generateFakeTodos(30);
+    // return FACTORY.generateFakeTodos(30);
   });
 
   /**
