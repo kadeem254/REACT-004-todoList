@@ -15,6 +15,8 @@ export default {
         cerulean: "#1a759f",
         lapis_lazuli: "#1e6091",
         indigo_dye: "#184e77",
+        sea_green: "#058c42",
+        pakistani_green: "#04471c",
       },
     },
   },
