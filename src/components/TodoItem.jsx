@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import {toast} from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faFloppyDisk, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import CheckBox from "./CheckBox";
@@ -110,6 +111,13 @@ function TodoItem({todoObject, todoToggleCallback, todoEditCallback, todoDeleteC
       if( todoEditCallback ){
         todoEditCallback(todoObject.id, editText);
       }
+      toast(
+        `Todo Updated Successfully`,
+        {
+          position: toast.POSITION.TOP_LEFT,
+          toastId: `TODO UPDATE SUCCESS`  
+        }
+      )
       setIsEditing(false);
       return;
     }

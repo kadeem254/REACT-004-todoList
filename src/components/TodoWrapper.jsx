@@ -2,11 +2,14 @@ import { useState } from "react";
 import AddTodoForm from "./AddTodoForm";
 import TodoItem from "./TodoItem";
 import * as FACTORY from "../utils/factory";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function TodoWrapper(){
   const [todos, setTodos] = useState(()=>{
     // temporary data
-    return FACTORY.generateFakeTodos(30);
+    // return FACTORY.generateFakeTodos(30);
+    return []
   });
 
   /**
@@ -24,7 +27,14 @@ function TodoWrapper(){
     // validate task length
     let text = task.trim()
     if( text.length <= 0 ){
-      console.error("Task is too short")
+      // console.error("Task is too short")
+      toast(
+        `Task must have a minimum of one character.`,
+        {
+          position: toast.POSITION.TOP_LEFT,
+          toastId: `SHORT TODO LENGTH`  
+        }
+      )
       return;
     }
 
@@ -41,7 +51,7 @@ function TodoWrapper(){
     setTodos(
       (previousTodos) => {
         const newTodos = [...previousTodos, newTaskItem];
-        console.log(newTodos);
+        // console.log(newTodos);
         return newTodos
       }
     )
@@ -118,6 +128,14 @@ function TodoWrapper(){
           }
         )
 
+        toast(
+          `Todo deleted successfully.`,
+          {
+            position: toast.POSITION.TOP_LEFT,
+            toastId: `TODO DELETE SUCCESS`  
+          }
+        )
+
         return updatedTodos
       }
     )
@@ -141,6 +159,7 @@ function TodoWrapper(){
           )
         }
       </ul>
+      <ToastContainer/>
     </div>
   )
 }
