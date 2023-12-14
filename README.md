@@ -1,8 +1,12 @@
-# React + Vite
+# PRACTICE TODO APP
+Minimal todo app built with vite and react.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Features
+- Allows saving locally on browser.
+- Can create, edit and delete tasks.
+- Notification feedback.
 
-Currently, two official plugins are available:
+## Todo
+- Add error handling for bad data format.
+- Improve notification system.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
