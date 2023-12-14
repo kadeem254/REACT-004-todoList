@@ -1,16 +1,42 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddTodoForm from "./AddTodoForm";
 import TodoItem from "./TodoItem";
 import * as FACTORY from "../utils/factory";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { fetchTodos, saveTodos } from "../utils/storage";
 
 function TodoWrapper(){
-  const [todos, setTodos] = useState(()=>{
-    // temporary data
-    // return FACTORY.generateFakeTodos(30);
-    return []
-  });
+  // monitor if todos have been loaded from storage.
+  const [storageLoaded, setStorageLoaded]=useState(false);
+  const [todos, setTodos] = useState([]);
+
+  // on initial load
+  useEffect(() =>{
+    const fetchData = async()=>{
+      
+      await fetchTodos().then(
+        ( todos ) => {
+          setTodos(todos);
+          return;
+        },
+        ( errors ) => {
+          setTodos([]);
+          return;
+        }
+      )
+      setStorageLoaded(true)
+    }
+    fetchData();
+  },[])
+
+  useEffect(()=>{
+    // whenever todos change update the storage
+    if( storageLoaded ){
+      saveTodos(todos);
+    }
+  },[todos])
+
 
   /**
    * 
