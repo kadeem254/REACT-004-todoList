@@ -84,8 +84,6 @@ function TodoWrapper(){
     return;
   }
 
-  
-
   /**
    * Handles toggle action for the completed status of a todo task.
    * @param {Event} event
@@ -122,10 +120,28 @@ function TodoWrapper(){
     const updatedTodos = todos.map(
       (todo, item)=>{
         if( todo.id === id ){
-          return {
-            ...todo,
-            text: newText,
-            updatedOn: Date.now()
+          try{
+            let _newText = newText.trim();
+            // if any changes are present show update toast
+            if( todo.text !== _newText ){
+              toast(
+                `Todo Updated Successfully`,
+                {
+                  position: toast.POSITION.TOP_LEFT,
+                  toastId: `TODO UPDATE SUCCESS`  
+                }
+              )
+            }
+
+            return {
+              ...todo,
+              text: _newText,
+              updatedOn: Date.now()
+            }
+          }
+          catch(error){
+            // do not change the todo if any errors are encountered.
+            return todo;
           }
         }
 

@@ -41,6 +41,11 @@ function TodoItem({todoObject, todoToggleCallback, todoEditCallback, todoDeleteC
       if( isEditing == true ){
         editFieldRef.current.focus();
       }
+      // actions to perform if isEditing is false
+      else{
+        // update the editText with changes made to the updates
+        setEditText( todoObject.text );
+      }
     },
     [isEditing]
   )
@@ -92,6 +97,7 @@ function TodoItem({todoObject, todoToggleCallback, todoEditCallback, todoDeleteC
    */
   const handleBlur = (event)=>{
     saveTodoEdit();
+    setIsEditing(false);
     return;
   }
 
@@ -117,13 +123,6 @@ function TodoItem({todoObject, todoToggleCallback, todoEditCallback, todoDeleteC
       if( todoEditCallback ){
         todoEditCallback(todoObject.id, editText);
       }
-      toast(
-        `Todo Updated Successfully`,
-        {
-          position: toast.POSITION.TOP_LEFT,
-          toastId: `TODO UPDATE SUCCESS`  
-        }
-      )
       return;
     }
 
