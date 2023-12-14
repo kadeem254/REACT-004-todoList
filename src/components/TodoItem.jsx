@@ -46,8 +46,13 @@ function TodoItem({todoObject, todoToggleCallback, todoEditCallback, todoDeleteC
   )
 
   const toggleEditMode = (event) => {
+    // if currently editing save and change state
+    // if editing go into edit mode
     setIsEditing(
       (currentState) => {
+        if( currentState ){
+          saveTodoEdit();
+        }
         const nextState = !currentState;
         return nextState;
       }
@@ -97,6 +102,7 @@ function TodoItem({todoObject, todoToggleCallback, todoEditCallback, todoDeleteC
   const handleKeyPress = (event)=>{
     if( event.key === 'Enter' ){
       saveTodoEdit();
+      setIsEditing(false);
     }
    
     return;
@@ -118,12 +124,10 @@ function TodoItem({todoObject, todoToggleCallback, todoEditCallback, todoDeleteC
           toastId: `TODO UPDATE SUCCESS`  
         }
       )
-      setIsEditing(false);
       return;
     }
 
     // if not valid release edit mode and reset value of edit text
-    setIsEditing(false);
     setEditText(todoObject.text);
     return
   }
@@ -187,21 +191,9 @@ function TodoItem({todoObject, todoToggleCallback, todoEditCallback, todoDeleteC
           items-center w-8 h-8 rounded-full cursor-pointer"
           onClick={toggleEditMode}
         >
-          {
-            isEditing 
-            ?(
-              <FontAwesomeIcon
-                icon={faFloppyDisk}
-                onClick={toggleEditMode}
-              ></FontAwesomeIcon>
-            )
-            :(
-              <FontAwesomeIcon
-                icon={faPenToSquare}
-                onClick={saveTodoEdit}
-              ></FontAwesomeIcon>
-            )
-          }
+          <FontAwesomeIcon
+            icon={isEditing ? faFloppyDisk : faPenToSquare}
+          ></FontAwesomeIcon>
         </div>
 
         <div 
